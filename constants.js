@@ -79,6 +79,9 @@ class Piece {
                 if (cell > 0) {
                     this.ctx.fillStyle = COLORS[cell] 
                     this.ctx.fillRect(this.x + j, this.y + i, 1, 1)
+                    this.ctx.strokeStyle = "black"
+                    this.ctx.lineWidth = 0.05
+                    this.ctx.strokeRect(this.x +j, this.y+i, 1, 1)
                 }
             })
         })
@@ -130,6 +133,9 @@ class GameModel {
                 let cell = this.grid[i][j] 
                 this.ctx.fillStyle = COLORS[cell] 
                 this.ctx.fillRect(j, i, 1, 1)
+                this.ctx.strokeStyle = "black"
+                this.ctx.lineWidth = 0.05
+                this.ctx.strokeRect(j, i, 1, 1)
             }
         }
 
@@ -137,7 +143,6 @@ class GameModel {
             this.fallingPiece.renderPiece()
         }
     }
-
 
     moveDown() {
         if (this.fallingPiece === null) {
@@ -217,6 +222,17 @@ let score = 0
 setInterval(() => {
     newGameState()
 }, GAME_CLOCK); 
+
+function minmax( min, max){
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+function movingCanvas(){
+    canvas.style.transform = `translateX(${minmax(-15,15)}px)`;
+    // canvas.style.opacity = minmax(0,1);
+    canvas.style.filter = `blur(${minmax(0,8)}px)`;;
+    requestAnimationFrame(movingCanvas);
+}
+movingCanvas();
 
 
 let newGameState = () => {
