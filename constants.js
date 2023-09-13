@@ -4,7 +4,6 @@ const ROWS = 20
 const COLS = 10 
 const SCORE_WORTH = 10 
 const myRange = document.getElementById("myRange");
-
 const SHAPES = [
     [],
     [
@@ -62,7 +61,8 @@ const COLORS = [
     '#FFFF00',
     '#00FFFF',
     '#10FF01',
-    '#F000FF'
+    '#F000FF',
+    'white'
 ]
 
 class Piece {
@@ -138,10 +138,18 @@ class GameModel {
                 this.ctx.strokeRect(j, i, 1, 1)
             }
         }
-
         if (this.fallingPiece !== null) {
             this.fallingPiece.renderPiece()
         }
+    }
+
+    renderizadoAletaorio(){
+        this.renderGameState();
+        const x= Math.round(Math.random() * COLS);
+            const y= Math.round(Math.random() * ROWS);
+            if(this.grid[y][x]===0){
+                this.grid[y][x]=8;
+            }
     }
 
     moveDown() {
@@ -234,6 +242,11 @@ function movingCanvas(){
 }
 movingCanvas();
 
+setInterval(() => {
+    if(model.fallingPiece !== null){
+        model.renderizadoAletaorio();
+    }
+}, 10000);
 
 let newGameState = () => {
     fullSend() 
